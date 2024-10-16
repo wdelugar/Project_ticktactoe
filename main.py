@@ -12,8 +12,8 @@ def main():
     board = create_grid()
     print_pretty(board)
     player_1, player_2 = weapon()
-    # starts the game
-    isFull(board, player_1, player_2)
+    # start the game
+    check_board(board, player_1, player_2)
 
 
 def create_grid():
@@ -78,20 +78,21 @@ def start_game(board, player_1, player_2, count):
     return board
 
 
-def isFull(board, player_1, player_2):
+def check_board(board, player_1, player_2):
     count = 1
     winner = True
     # This function check if the board is full
     while count < 10 and winner == True:
-        start_game(board, player_1, player_2, count)
+        board = start_game(board, player_1, player_2, count)
         print_pretty(board)
 
+        # end of inputs and no winner
         if count == 9:
             print("Game over.")
             print("It is a tie! ")
 
         # Check for winner
-        winner = isWinner(board, player_1, player_2, count)
+        winner = check_winner(board, player_1, player_2, count)
         count += 1
 
     if not winner:
@@ -118,7 +119,7 @@ def print_pretty(board):
     # This function prints the board
 
     rows = len(board)
-    cols = len(board)
+
     print("    0   1   2 ")
     print("   ---+---+---")
     for r in range(rows):
@@ -127,25 +128,25 @@ def print_pretty(board):
     return board
 
 
-def isWinner(board, player_1, player_2, count):
+def check_winner(board, player_1, player_2, count):
     # Checks for winners
     winner = True
     # Check the rows
     for row in range(0, 3):
-        if (board[row][0] == board[row][1] == board[row][2] == player_1):
+        if board[row][0] == board[row][1] == board[row][2] == player_1:
             winner = False
             print("Player " + player_1 + ", you win!")
 
-        elif (board[row][0] == board[row][1] == board[row][2] == player_2):
+        elif board[row][0] == board[row][1] == board[row][2] == player_2:
             winner = False
             print("Player " + player_2 + ", you win!")
 
     # Check the columns
     for col in range(0, 3):
-        if (board[0][col] == board[1][col] == board[2][col] == player_1):
+        if board[0][col] == board[1][col] == board[2][col] == player_1:
             winner = False
             print("Player " + player_1 + ", you win!")
-        elif (board[0][col] == board[1][col] == board[2][col] == player_2):
+        elif board[0][col] == board[1][col] == board[2][col] == player_2:
             winner = False
             print("Player " + player_2 + ", you win!")
 
